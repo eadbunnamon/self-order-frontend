@@ -9,7 +9,7 @@ const AppLayout = () => {
   const handleLogout = (event) => {
     event.preventDefault();
     LoginSession.logout();
-    window.location.replace('/login');
+    window.location.replace('/');
   }
 
   return (
@@ -17,15 +17,13 @@ const AppLayout = () => {
       <header className="App-header">
         <h2>Self-Order</h2>
       </header>
-      <body>
+      <div>
+        <h4>Welcome to self-order restaurant tool</h4>
         <div>
-          <h4>Welcome to self-order restaurant tool</h4>
-          <div>
-            <Link to="/sign_out" onClick={handleLogout}>Sign Out</Link>
-          </div>
-          <Outlet /> {/*nested routes rendered here*/}
+          <Link to="/sign_out" onClick={handleLogout}>Sign Out</Link>
         </div>
-      </body>
+        <Outlet /> {/*nested routes rendered here*/}
+      </div>
     </div>
   );
 };

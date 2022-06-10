@@ -6,7 +6,7 @@ import LoginSession from '../stores/LoginSession';
 const HomePage = ({ children }) => {
   return (
     <div>
-      <h2>Home</h2>
+      <h1 className="text-3xl font-bold underline">Home</h1>
       {!LoginSession.current ? (
         <div>
           <Link to="/login">Sign In</Link><br />
