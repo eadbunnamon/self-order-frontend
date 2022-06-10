@@ -6,7 +6,7 @@ const BackendLayout = () => {
 
   return (
     <div>
-      <header className="App-header">
+      <header className='bg-gray-400 py-4'>
         <div>Self-Order Backend</div>
       </header>
       <div>

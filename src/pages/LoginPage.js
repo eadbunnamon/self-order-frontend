@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 
 import LoginSession from '../stores/LoginSession';
 import ErrorMessage from '../components/ErrorMessage';
@@ -29,45 +30,60 @@ function LoginPage() {
   }
 
   return (
-    <div id='LoginPage'>
-      <div>
-        {error_message && <ErrorMessage error_message={error_message}/>}
-      </div>
-
-      <div>
-        <form onSubmit={handleSubmit}>
+    <div>
+      <header className='bg-gray-400 py-4'>
+        <div className='flex w-full'>
+          <div className='w-1/3 mx-4'>Logo</div>
+          <div className='w-1/3 mx-4 text-center mr-auto'><h1>Self-Order</h1></div>
+        </div>
+      </header>
+      <div id='LoginPage' className='flex flex-wrap pt-6'>
+        <div class="w-1/3 ml-auto mr-auto">
           <div>
-            <div>
-              <label>ชื่อเข้าใช้</label>
-            </div>
-            <div>
-              <input type="text"
-                 className="form-control"
-                 id="username"
-                 name="username"
-                 placeholder="ชื่อเข้าใช้"
-                 onChange={handleChange} />
-            </div>
+            {error_message && <ErrorMessage error_message={error_message}/>}
           </div>
 
-          <div>
-            <div>
-              <label>รหัสผ่าน</label>
-            </div>
-            <div>
-              <input type="password"
-                 className="form-control"
-                 id="password"
-                 name="password"
-                 placeholder="รหัสผ่าน"
-                 onChange={handleChange} />
-            </div>
-          </div>
+          <div className='w-full'>
+            <form onSubmit={handleSubmit} className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
+                  ชื่อเข้าใช้
+                </label>
+                <input 
+                  type="text"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="username"
+                  name="username"
+                  placeholder="ชื่อเข้าใช้"
+                  onChange={handleChange} />
+              </div>
 
-          <div>
-            <button type='submit' className='btn btn-primary'>เข้าสู่ระบบ</button>
+              <div className='mb-4'>
+                <div>
+                  <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
+                    รหัสผ่าน
+                  </label>
+                </div>
+                <div>
+                  <input type="password"
+                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                     id="password"
+                     name="password"
+                     placeholder="รหัสผ่าน"
+                     onChange={handleChange} />
+                  {/*<p class="text-red-500 text-xs italic">Please choose a password.</p>*/}
+                </div>
+              </div>
+
+              <div className='flex items-center justify-between'>
+                <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>เข้าสู่ระบบ</button>
+                <Link className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" to="/">
+                  Forgot Password?
+                </Link>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )

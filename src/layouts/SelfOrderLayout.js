@@ -6,7 +6,7 @@ const SelfOrderLayout = () => {
 
   return (
     <div>
-      <header className="App-header">
+      <header className='bg-gray-400 py-4'>
         <h2>Restaurant Name</h2>
       </header>
       <div>
