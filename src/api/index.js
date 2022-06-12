@@ -3,10 +3,6 @@ import axios, {create} from 'axios'
 const ADMIN_API_END_POINT = '/v1/';
 const CLIENT_API_END_POINT = '/v1/self_order/';
 
-export function createApi(options) {
-  return create(options)
-}
-
 export function setHeader(key, value, api) {
   (api || axios).defaults.headers.common[key] = value;
 }

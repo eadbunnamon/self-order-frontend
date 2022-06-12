@@ -31,8 +31,9 @@ export class LoginSession {
     this._session = JSON.parse(localStorage.getItem(SESSION_STORAGE_KEY) || null)
     if (this._session) {
       var token = this._session.auth_token;
-      setHeader('Authorization', token)
+      setHeader('Authorization', 'Bearer ' + token, adminApi)
     } else {
+      console.log('Clear Token')
       setHeader('Authorization', null)
     }
   }

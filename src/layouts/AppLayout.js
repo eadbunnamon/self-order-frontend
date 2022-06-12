@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet, Link } from 'react-router-dom';
 
 import LoginSession from '../stores/LoginSession';
+import SetupMenu from '../components/SetupMenu';
 
 const AppLayout = () => {
   console.log("render App Layout");
@@ -35,9 +36,18 @@ const AppLayout = () => {
           </div>
         </div>
       </header>
-      <div className='h-screen w-full'>
-        <Outlet /> {/*nested routes rendered here*/}
-      </div>
+      {LoginSession.current ? (
+        <div className='flex h-screen w-full'>
+          <SetupMenu />
+          <div className='w-4/5 p-4'>
+            <Outlet /> {/*nested routes rendered here*/}
+          </div>
+        </div>
+      ) : (
+        <div className='h-screen w-full p-5'>
+          <Outlet /> {/*nested routes rendered here*/}
+        </div>
+      )}
     </div>
   );
 };

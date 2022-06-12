@@ -19,7 +19,7 @@ function LoginPage() {
     LoginSession.login(signinValues.username, signinValues.password).then(()=> {
       window.location.href = '/';
     }, function(error) {
-      var error_message = error.response.data.errors[0];
+      const error_message = error.response.data.error.message;
       setErrorMessage(error_message);
     })
   }
@@ -39,16 +39,16 @@ function LoginPage() {
           <div className='w-1/3 mx-4 text-center mr-auto'><h1>Self-Order</h1></div>
         </div>
       </header>
-      <div id='LoginPage' className='flex flex-wrap pt-6'>
-        <div class="w-1/3 ml-auto mr-auto">
+      <div className='flex flex-wrap pt-6'>
+        <div className="w-1/3 ml-auto mr-auto">
           <div>
-            {error_message && <ErrorMessage error_message={error_message}/>}
+            {error_message && <ErrorMessage error_message={error_message} />}
           </div>
 
           <div className='w-full'>
             <form onSubmit={handleSubmit} className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                   ชื่อเข้าใช้
                 </label>
                 <input 
@@ -62,7 +62,7 @@ function LoginPage() {
 
               <div className='mb-4'>
                 <div>
-                  <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                     รหัสผ่าน
                   </label>
                 </div>
@@ -73,7 +73,7 @@ function LoginPage() {
                      name="password"
                      placeholder="รหัสผ่าน"
                      onChange={handleChange} />
-                  {/*<p class="text-red-500 text-xs italic">Please choose a password.</p>*/}
+                  {/*<p className="text-red-500 text-xs italic">Please choose a password.</p>*/}
                 </div>
               </div>
 

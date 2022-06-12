@@ -5,8 +5,8 @@ import LoginSession from '../stores/LoginSession';
 
 const HomePage = ({ children }) => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Home</h1>
+    <div className='w-full'>
+      Welcome to self-order
     </div>
   );
 };
