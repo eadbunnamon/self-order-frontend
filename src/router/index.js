@@ -18,7 +18,9 @@ import SelfOrderHomePage from '../pages/self_order/HomePage'
 // setup
 import HomePage from '../pages/HomePage'
 import RestaurantsPage from '../pages/setup/restaurants/RestaurantsPage'
+import RestaurantPage from '../pages/setup/restaurants/RestaurantPage'
 import RestaurantForm from '../pages/setup/restaurants/RestaurantForm'
+import RestaurantEditForm from '../pages/setup/restaurants/RestaurantEditForm'
 
 const AppRoutes = () => {
   return (
@@ -31,16 +33,21 @@ const AppRoutes = () => {
         </Route>
 
         <Route path="/setup" element={<RequireAuth><AppLayout /></RequireAuth>} >
-          <Route path="/setup/restaurants" element={<RestaurantsPage />} /> {/*nested routes*/}
-          <Route path="/setup/create_restaurant" element={<RestaurantForm />} /> {/*nested routes*/}
+          {/*nested routes*/} 
+          <Route path="/setup/restaurants" element={<RestaurantsPage />} />
+          <Route path="/setup/restaurants/:id" element={<RestaurantPage />} />
+          <Route path="/setup/create_restaurant" element={<RestaurantForm />} />
+          <Route path="/setup/edit_restaurant/:id" element={<RestaurantEditForm />} />
         </Route>
 
         <Route path="/self-order" element={<SelfOrderLayout />} >
-          <Route path="/self-order" element={<SelfOrderHomePage />} /> {/*nested routes*/}
+          {/*nested routes*/}
+          <Route path="/self-order" element={<SelfOrderHomePage />} />
         </Route>
 
         <Route path="/backend" element={<RequireAuth><BackendLayout /></RequireAuth>} >
-          <Route path="/backend/dashboard" element={<DashboardPage />} /> {/*nested routes*/}
+          {/*nested routes*/}
+          <Route path="/backend/dashboard" element={<DashboardPage />} />
         </Route>
       </Routes>
     </Router>

@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useParams } from "react-router-dom";
 import { adminApi } from '../../../api';
 
 import ErrorMessage from '../../../components/ErrorMessage';
 
-function RestaurantForm() {
+function RestaurantEditForm() {
+  let params = useParams();
+  const id = params['id'];
+
   const [restaurantValues, setRestaurantValues] = useState({
     name: '',
     name_en: '',
@@ -13,6 +17,28 @@ function RestaurantForm() {
     day_off_description_en: '',
     // restaurant_type_id: ''
   });
+
+  useEffect(() => {
+    adminApi.request({
+      method: 'get',
+      url: '/restaurants/' + id
+    }).then(function (resp) {
+      // setRestaurant(resp.data);
+      const data = resp.data;
+      setRestaurantValues({
+          name: data.name || '',
+          name_en: data.name_en || '',
+          open_time: data.open_time || '',
+          close_time: data.close_time || '',
+          day_off_description: data.day_off_description || '',
+          day_off_description_en: data.day_off_description_en || ''
+      });
+    })
+    .catch(function (error) {
+      // const error_message = error.response.data.error.message;
+      console.log(error);
+    });
+  }, []);
 
   const [error_message, setErrorMessage] = useState('');
 
@@ -29,8 +55,8 @@ function RestaurantForm() {
     };
 
     adminApi.request({
-      method: 'post',
-      url: '/restaurants',
+      method: 'put',
+      url: '/restaurants/' + id,
       data: { restaurant: data }
     }).then(function (response) {
       window.location.href = '/setup/restaurants';
@@ -49,7 +75,7 @@ function RestaurantForm() {
   return (
     <div>
       <div className='mb-4'>
-        <h1 className="text-3xl font-bold underline">+ Create new restaurant</h1>
+        <h1 className="text-3xl font-bold underline">+ Edit restaurant</h1>
       </div>
 
       <div>
@@ -83,6 +109,7 @@ function RestaurantForm() {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="name"
                     name="name"
+                    value={restaurantValues.name}
                     placeholder="ชื่อร้าน"
                     onChange={handleChange} />
                 </div>
@@ -97,6 +124,7 @@ function RestaurantForm() {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="name_en"
                     name="name_en"
+                    value={restaurantValues.name_en}
                     placeholder="Restaurant name"
                     onChange={handleChange} />
                 </div>
@@ -114,6 +142,7 @@ function RestaurantForm() {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="open_time"
                     name="open_time"
+                    value={restaurantValues.open_time}
                     placeholder="เวลาร้านเปิด เช่น จันทร์-ศุกร์ เปิด 09:00 น. เสาร์-อาทิตย์ 10:00 น."
                     onChange={handleChange} />
                 </div>
@@ -128,6 +157,7 @@ function RestaurantForm() {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="close_time"
                     name="close_time"
+                    value={restaurantValues.close_time}
                     placeholder="เวลาร้านปิด เช่น จันทร์-ศุกร์ เปิด 21:00 น. เสาร์-อาทิตย์ 23:00 น."
                     onChange={handleChange} />
                 </div>
@@ -145,6 +175,7 @@ function RestaurantForm() {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="day_off_description"
                     name="day_off_description"
+                    value={restaurantValues.day_off_description}
                     placeholder="วันหยุด เช่น หยุดทุกวันจันทร์"
                     onChange={handleChange} />
                 </div>
@@ -159,6 +190,7 @@ function RestaurantForm() {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="day_off_description_en"
                     name="day_off_description_en"
+                    value={restaurantValues.day_off_description_en}
                     placeholder="Day off e.g. close every Monday"
                     onChange={handleChange} />
                 </div>
@@ -175,4 +207,4 @@ function RestaurantForm() {
   );
 }
 
-export default RestaurantForm;
+export default RestaurantEditForm;
