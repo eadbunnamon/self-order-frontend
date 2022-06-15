@@ -15,7 +15,7 @@ const AppLayout = () => {
 
   return (
     <div>
-      <header className='py-4 sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent'>
+      <header className='py-4 top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent'>
         <div className='flex w-full'>
           <div className='w-1/3 mx-4'>
             <Link to='/' className='hover:text-sky-500 dark:hover:text-sky-400'>Logo</Link>
@@ -37,14 +37,14 @@ const AppLayout = () => {
         </div>
       </header>
       {LoginSession.current ? (
-        <div className='flex h-screen w-full'>
+        <div className='flex h-screen w-full px-5 mt-5'>
           <SetupMenu />
-          <div className='w-4/5 p-4'>
+          <div className='w-4/5 pl-5'>
             <Outlet /> {/*nested routes rendered here*/}
           </div>
         </div>
       ) : (
-        <div className='h-screen w-full p-5'>
+        <div className='h-screen w-full px-5 mt-5'>
           <Outlet /> {/*nested routes rendered here*/}
         </div>
       )}

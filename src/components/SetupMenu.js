@@ -6,7 +6,7 @@ const SetupMenu = () => {
       <table className="w-full border-separate border-spacing-2 border border-slate-400 text-center">
         <thead>
           <tr>
-            <th className="border border-slate-300">Menus</th>
+            <th className="border border-slate-300 text-lime-600">Menus</th>
           </tr>
         </thead>
         <tbody>
