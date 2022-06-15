@@ -32,7 +32,7 @@ function RestaurantsPage() {
           <Link to={`/setup/restaurants/${restaurant.id}`} >{restaurant.restaurant_type.type_name}</Link>
         </td>
         <td className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
-          <Link to={`/setup/edit_restaurant/${restaurant.id}`} >Edit</Link>
+          <Link to={`/setup/restaurants/${restaurant.id}`} >{restaurant.number_of_tables}</Link>
         </td>
       </tr>
     )
@@ -60,7 +60,7 @@ function RestaurantsPage() {
               <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Restaurant Name</th>
               <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Restaurant Name (EN)</th>
               <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Restaurant Type</th>
-              <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Action</th>
+              <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Number of Tables</th>
             </tr>
           </thead>
           <tbody>
