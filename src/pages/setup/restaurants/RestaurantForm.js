@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { adminApi } from '../../../api';
+import ApiService from '../../../services/api_service';
+
 
 import ErrorMessage from '../../../components/ErrorMessage';
 
@@ -28,15 +29,16 @@ function RestaurantForm() {
       day_off_description_en: restaurantValues.day_off_description_en
     };
 
-    adminApi.request({
-      method: 'post',
-      url: '/restaurants',
-      data: { restaurant: data }
-    }).then(function (response) {
+    const newRecord = async () => {
+      let endpoint = '/restaurants';
+      const payload = { restaurant: data };
+      await ApiService.apiPost(endpoint, payload);
       window.location.href = '/setup/restaurants';
-    })
+    }
+
+    newRecord()
     .catch(function (error) {
-      const error_message = error.response.data.error.message;
+      const error_message = error.response.data.responseText;
       setErrorMessage(error_message);
     });
   }

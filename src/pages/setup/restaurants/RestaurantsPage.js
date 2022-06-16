@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { adminApi } from '../../../api';
 import _ from 'lodash';
+import ApiService from '../../../services/api_service';
 
 function RestaurantsPage() {
   const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
-    adminApi.request({
-      method: 'get',
-      url: '/restaurants'
-    }).then(function (resp) {
-      setRestaurants(resp.data);
-    })
-    .catch(function (error) {
-      // const error_message = error.response.data.error.message;
-      console.log(error);
+    const fetchData = async () => {
+      let endpoint = '/restaurants';
+      const data = await ApiService.apiGet(endpoint);
+      setRestaurants(data);
+    }
+
+    fetchData().catch(function (error) {
+      console.log('error =>', error);
     });
   }, []);
 

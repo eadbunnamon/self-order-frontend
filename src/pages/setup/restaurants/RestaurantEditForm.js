@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useParams } from "react-router-dom";
-import { adminApi } from '../../../api';
+import ApiService from '../../../services/api_service';
 
 import ErrorMessage from '../../../components/ErrorMessage';
 
@@ -8,6 +8,8 @@ function RestaurantEditForm() {
   let params = useParams();
   const id = params['id'];
 
+  const [error_message, setErrorMessage] = useState('');
+  
   const [restaurantValues, setRestaurantValues] = useState({
     name: '',
     name_en: '',
@@ -19,12 +21,9 @@ function RestaurantEditForm() {
   });
 
   useEffect(() => {
-    adminApi.request({
-      method: 'get',
-      url: '/restaurants/' + id
-    }).then(function (resp) {
-      // setRestaurant(resp.data);
-      const data = resp.data;
+    const fetchData = async () => {
+      let endpoint = '/restaurants/' + id;
+      const data = await ApiService.apiGet(endpoint);
       setRestaurantValues({
           name: data.name || '',
           name_en: data.name_en || '',
@@ -33,14 +32,12 @@ function RestaurantEditForm() {
           day_off_description: data.day_off_description || '',
           day_off_description_en: data.day_off_description_en || ''
       });
-    })
-    .catch(function (error) {
-      // const error_message = error.response.data.error.message;
-      console.log(error);
-    });
-  }, []);
+    }
 
-  const [error_message, setErrorMessage] = useState('');
+    fetchData().catch(function (error) {
+      console.log('error =>', error);
+    });
+  }, [id]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,15 +51,16 @@ function RestaurantEditForm() {
       day_off_description_en: restaurantValues.day_off_description_en
     };
 
-    adminApi.request({
-      method: 'put',
-      url: '/restaurants/' + id,
-      data: { restaurant: data }
-    }).then(function (response) {
+    const updateData = async () => {
+      let endpoint = '/restaurants/' + id;
+      const payload = { restaurant: data }
+      await ApiService.apiPut(endpoint, payload);
       window.location.href = '/setup/restaurants';
-    })
+    };
+
+    updateData()
     .catch(function (error) {
-      const error_message = error.response.data.error.message;
+      const error_message = error.response.data.responseText;
       setErrorMessage(error_message);
     });
   }
