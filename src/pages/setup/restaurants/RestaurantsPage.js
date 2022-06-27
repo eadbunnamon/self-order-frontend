@@ -21,16 +21,16 @@ function RestaurantsPage() {
   const renderRestaurant = (restaurant, index) => {
     return (
       <tr key={index}>
-        <td className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
+        <td className='p-3 border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
           <Link to={`/setup/restaurants/${restaurant.id}`} >{restaurant.name}</Link>
         </td>
-        <td className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
+        <td className='p-3 border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
           <Link to={`/setup/restaurants/${restaurant.id}`} >{restaurant.name_en}</Link>
         </td>
-        <td className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
+        <td className='p-3 border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
           <Link to={`/setup/restaurants/${restaurant.id}`} >{restaurant.restaurant_type.type_name}</Link>
         </td>
-        <td className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
+        <td className='p-3 border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400'>
           <Link to={`/setup/restaurants/${restaurant.id}`} >{restaurant.number_of_tables}</Link>
         </td>
       </tr>
@@ -42,7 +42,7 @@ function RestaurantsPage() {
       <div className='my-4'>
         <div className='flex w-full'>
           <div className='w-1/2'>
-            <h1 className="text-3xl font-bold underline">Restaurants</h1>
+            <h1 className="text-3xl font-bold">Restaurants</h1>
           </div>
           <div className='w-1/2 text-right'>
             <Link to='/setup/create_restaurant' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
@@ -56,10 +56,10 @@ function RestaurantsPage() {
         <table className="border-collapse table-auto w-full">
           <thead className='text-left'>
             <tr>
-              <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Restaurant Name</th>
-              <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Restaurant Name (EN)</th>
-              <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Restaurant Type</th>
-              <th className='border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-600 dark:text-slate-200'>Number of Tables</th>
+              <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Restaurant Name</th>
+              <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Restaurant Name (EN)</th>
+              <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Restaurant Type</th>
+              <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Number of Tables</th>
             </tr>
           </thead>
           <tbody>

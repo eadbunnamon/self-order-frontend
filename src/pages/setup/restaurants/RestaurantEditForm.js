@@ -55,7 +55,7 @@ function RestaurantEditForm() {
       let endpoint = '/restaurants/' + id;
       const payload = { restaurant: data }
       await ApiService.apiPut(endpoint, payload);
-      window.location.href = '/setup/restaurants';
+      window.location.href = '/setup/restaurants/' + id;
     };
 
     updateData()
@@ -73,7 +73,7 @@ function RestaurantEditForm() {
   return (
     <div>
       <div className='mb-4'>
-        <h1 className="text-3xl font-bold underline">+ Edit restaurant</h1>
+        <h1 className="text-3xl font-bold">+ Edit restaurant</h1>
       </div>
 
       <div>

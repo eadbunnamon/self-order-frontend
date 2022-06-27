@@ -1,6 +1,6 @@
 const ErrorMessage = ({error_message}) => {
   return (
-    <div className="alert alert-danger" role="alert">
+    <div className="text-red-500">
       {error_message}
     </div>
   )
