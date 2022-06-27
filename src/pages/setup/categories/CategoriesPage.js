@@ -2,13 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
 
+import ErrorMessage from '../../../components/ErrorMessage';
 import NewCategoryPage from './NewCategoryPage';
 import EditCategoryPage from './EditCategoryPage';
 
 function CategoriesPage(props) {
   const restaurant_id = props.restaurant.id;
 
-  const [categories, setCategories] = useState();
+  const [error_message, setErrorMessage] = useState('');
+  const [categories, setCategories] = useState([]);
   const [mode, setMode] = useState({
     edit: false,
     id: ''
@@ -17,7 +19,7 @@ function CategoriesPage(props) {
   const fetchData = async (restaurant_id) => {
     let endpoint = `/restaurants/${restaurant_id}/categories`;
     const data = await ApiService.apiGet(endpoint);
-    setCategories(data);
+    await setCategories(data);
   }
 
   useEffect(() => {
@@ -37,7 +39,25 @@ function CategoriesPage(props) {
 
   const handleReload = (category_data) => {
     fetchData(restaurant_id).catch(function (error) {
-      console.log('error =>', error);
+      const error_message = error.response.data.error.message;
+      setErrorMessage(error_message);
+    });
+  }
+
+  const handleDelete = (category) => {
+    const deleteCategory = async () => {
+      let endpoint = `/restaurants/${restaurant_id}/categories/${category.id}`;
+      await ApiService.apiDelete(endpoint);
+
+      fetchData(restaurant_id).catch(function (error) {
+        const error_message = error.response.data.error.message;
+        setErrorMessage(error_message);
+      });
+    }
+
+    deleteCategory().catch(function (error) {
+      const error_message = error.response.data.error.message;
+      setErrorMessage(error_message);
     });
   }
 
@@ -61,11 +81,20 @@ function CategoriesPage(props) {
             </div>
             <div className='mt-3'>
               <div className='text-right'>
-                <button onClick={() => {handleSetMode(true, category)}} className='bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded'>
+                <button
+                  onClick={() => {handleSetMode(true, category)}}
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded'>
                   แก้ไข
                 </button>
-                <button onClick={() => {handleSetMode(true, category)}} className='ml-3 bg-lime-500 hover:bg-lime-700 text-white font-bold p-2 rounded'>
+                <button
+                  onClick={() => {handleSetMode(true, category)}}
+                  className='ml-3 bg-lime-500 hover:bg-lime-700 text-white font-bold px-2 py-1 rounded'>
                   จัดการเมนู
+                </button>
+                <button
+                  onClick={() => {if(window.confirm('Delete the item?')) {handleDelete(category)}}}
+                  className='ml-3 bg-red-700 hover:bg-red-900 text-white font-bold px-2 py-1 rounded'>
+                  ลบ
                 </button>
               </div>
             </div>
@@ -79,6 +108,10 @@ function CategoriesPage(props) {
     <div>
       <div className='bg-gray-200 border rounded p-4 my-5'>
         <h1 className='font-bold'>ประเภทเมนูอาหาร</h1>
+      </div>
+
+      <div>
+        {error_message && <ErrorMessage error_message={error_message} />}
       </div>
 
       <NewCategoryPage

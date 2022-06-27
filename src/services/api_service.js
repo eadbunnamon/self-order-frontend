@@ -42,6 +42,19 @@ export class ApiService {
       throw error
     });
   }
+
+  apiDelete(url) {
+    return adminApi.request({
+      method: 'delete',
+      url: url
+    })
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      throw error
+    });
+  }
 }
 
 export default new ApiService();
