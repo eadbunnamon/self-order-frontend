@@ -12,10 +12,6 @@ function EditCategoryPage(props) {
     name_en: category.name_en
   });
 
-  const handleSetMode = (mode, id) => {
-    props.handleSetMode(mode, id);
-  }
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -84,6 +80,12 @@ function EditCategoryPage(props) {
           <div className='w-1/2 text-right'>
             <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded'>
               บันทึก
+            </button>
+            <button
+              onClick={()=>{props.handleSetMode(false, category)}}
+              type='button'
+              className='bg-gray-500 hover:bg-gray-700 text-white font-bold p-2 rounded ml-3'>
+              ยกเลิก
             </button>
           </div>
         </div>

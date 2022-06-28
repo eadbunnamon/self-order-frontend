@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
+import { TrashIcon, PencilIcon } from '@heroicons/react/solid'
 
 import ErrorMessage from '../../../components/ErrorMessage';
 import NewCategoryPage from './NewCategoryPage';
@@ -80,22 +81,24 @@ function CategoriesPage(props) {
               </div>
             </div>
             <div className='mt-3'>
-              <div className='text-right'>
-                <button
-                  onClick={() => {handleSetMode(true, category)}}
-                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded'>
-                  แก้ไข
-                </button>
-                <button
-                  onClick={() => {handleSetMode(true, category)}}
-                  className='ml-3 bg-lime-500 hover:bg-lime-700 text-white font-bold px-2 py-1 rounded'>
-                  จัดการเมนู
-                </button>
-                <button
-                  onClick={() => {if(window.confirm('Delete the item?')) {handleDelete(category)}}}
-                  className='ml-3 bg-red-700 hover:bg-red-900 text-white font-bold px-2 py-1 rounded'>
-                  ลบ
-                </button>
+              <div className='flex'>
+                <div className='w-1/2'>
+
+                  <TrashIcon
+                    className="inline h-5 w-5 text-gray-500 hover:text-red-700"
+                    onClick={() => {if(window.confirm('Delete the item?')) {handleDelete(category)}}}/>
+
+                  <PencilIcon
+                    onClick={() => {handleSetMode(true, category)}}
+                    className="inline h-5 w-5 text-gray-500 hover:text-blue-700 ml-2" />
+                </div>
+                <div className='w-1/2 text-right'>
+                  <button
+                    onClick={() => {handleSetMode(true, category)}}
+                    className='ml-3 bg-lime-500 hover:bg-lime-700 text-white px-2 py-1 rounded'>
+                    จัดการเมนูอาหาร
+                  </button>
+                </div>
               </div>
             </div>
           </div>
