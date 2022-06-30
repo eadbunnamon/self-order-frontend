@@ -43,7 +43,7 @@ function NewTablePage(props) {
         <div className='flex'>
           <div className='w-2/6'>
             <div className='text-gray-500'>
-              * ชื่อโต๊ะ
+              ชื่อโต๊ะ<span className='text-red-500 ml-1'>*</span>
             </div>
             <input 
               type="text"

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
+import { TrashIcon, PencilIcon } from '@heroicons/react/solid'
 
 import NewTablePage from './NewTablePage';
 
 function TablesPage(props) {
   const restaurant_id = props.restaurant.id;
 
+  const [error_message, setErrorMessage] = useState('');
   const [tables, setTables] = useState([]);
 
   const fetchData = async (restaurant_id) => {
@@ -27,10 +29,35 @@ function TablesPage(props) {
     });
   }
 
+  const handleDelete = (table) => {
+    const deleteTable = async () => {
+      let endpoint = `/restaurants/${restaurant_id}/tables/${table.id}`;
+      await ApiService.apiDelete(endpoint);
+
+      fetchData(restaurant_id).catch(function (error) {
+        const error_message = error.response.data.error.message;
+        setErrorMessage(error_message);
+      });
+    }
+
+    deleteTable().catch(function (error) {
+      const error_message = error.response.data.error.message;
+      setErrorMessage(error_message);
+    });
+  }
+
   const renderTable = (table, index) => {
     return (
       <div key={index} className='border border-lime-600 rounded p-3'>
-        {table.name}
+        <div className='font-bold text-gray-500'>{table.name}</div>
+        <div className='align-right'>
+          <TrashIcon
+            onClick={() => {if(window.confirm('Delete the item?')) {handleDelete(table)}}}
+            className="inline h-5 w-5 text-gray-500 hover:text-red-700 ml-2 float-right"/>
+
+          <PencilIcon
+            className="inline h-5 w-5 text-gray-500 hover:text-blue-700 float-right" />
+        </div>
       </div>
     )
   }
