@@ -19,8 +19,8 @@ function EditCategoryPage(props) {
       let endpoint = `/restaurants/${category.restaurant_id}/categories/${category.id}`;
       const payload = { category: cat };
       await ApiService.apiPut(endpoint, payload);
-      props.handleSetMode(false, cat);
-      props.handleReload(cat);
+      props.handleSetMode(false, category);
+      props.handleReload(category);
     }
 
     updateData()
