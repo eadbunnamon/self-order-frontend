@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
 import { TrashIcon, PencilIcon } from '@heroicons/react/solid'
@@ -8,7 +9,7 @@ import NewCategoryPage from './NewCategoryPage';
 import EditCategoryPage from './EditCategoryPage';
 
 function CategoriesPage(props) {
-  const restaurant_id = props.restaurant.id;
+  const restaurant_id = props.restaurant_id;
 
   const [error_message, setErrorMessage] = useState('');
   const [categories, setCategories] = useState([]);
@@ -18,14 +19,16 @@ function CategoriesPage(props) {
   });
 
   const fetchData = async (restaurant_id) => {
+    console.log('Fetch Category Data');
     let endpoint = `/restaurants/${restaurant_id}/categories`;
     const data = await ApiService.apiGet(endpoint);
     await setCategories(data);
+    console.log('Afer setCategories')
   }
 
   useEffect(() => {
     fetchData(restaurant_id).catch(function (error) {
-      console.log('error =>', error);
+      console.log('error when featch categories =>', error);
     });
   }, [restaurant_id]);
 
@@ -62,6 +65,10 @@ function CategoriesPage(props) {
     });
   }
 
+  if (!categories) {
+    return <div>Loadding...</div>;
+  }
+
   const renderCategory = (category, index) => {
     return (
       <div key={index} className='border border-lime-600 rounded p-3'>
@@ -93,11 +100,10 @@ function CategoriesPage(props) {
                     className="inline h-5 w-5 text-gray-500 hover:text-blue-700 ml-2" />
                 </div>
                 <div className='w-1/2 text-right'>
-                  <button
-                    onClick={() => {handleSetMode(true, category)}}
-                    className='ml-3 bg-lime-500 hover:bg-lime-700 text-white px-2 py-1 rounded'>
+                  <Link to={`/setup/${restaurant_id}/${category.id}/items`}
+                    className='ml-3 bg-lime-500 hover:bg-lime-700 text-white px-2 py-2 rounded'>
                     จัดการเมนูอาหาร
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

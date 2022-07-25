@@ -21,6 +21,8 @@ import RestaurantsPage from '../pages/setup/restaurants/RestaurantsPage'
 import RestaurantPage from '../pages/setup/restaurants/RestaurantPage'
 import RestaurantForm from '../pages/setup/restaurants/RestaurantForm'
 import RestaurantEditForm from '../pages/setup/restaurants/RestaurantEditForm'
+import PrintQrPage from '../pages/setup/tables/PrintQrPage'
+
 import CategoriesPage from '../pages/setup/categories/CategoriesPage'
 import ItemsPage from '../pages/setup/items/ItemsPage'
 
@@ -41,7 +43,9 @@ const AppRoutes = () => {
           <Route path="/setup/create_restaurant" element={<RestaurantForm />} />
           <Route path="/setup/edit_restaurant/:id" element={<RestaurantEditForm />} />
           <Route path="/setup/:restaurant_id/categories" element={<CategoriesPage />} />
-          <Route path="/setup/:category_id/items" element={<ItemsPage />} />
+          <Route path="/setup/:restaurant_id/:category_id/items" element={<ItemsPage />} />
+          <Route path="/setup/restaurants/:id/print_qr_codes/:table_id" element={<PrintQrPage />} />
+          <Route path="/setup/restaurants/:id/print_qr_codes/all_tables" element={<PrintQrPage />} />
         </Route>
 
         <Route path="/self-order" element={<SelfOrderLayout />} >

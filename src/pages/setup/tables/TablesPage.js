@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
 import { TrashIcon, PencilIcon } from '@heroicons/react/solid'
@@ -8,7 +9,7 @@ import NewTablePage from './NewTablePage';
 import EditTablePage from './EditTablePage';
 
 function TablesPage(props) {
-  const restaurant_id = props.restaurant.id;
+  const restaurant_id = props.restaurant_id;
 
   const [error_message, setErrorMessage] = useState('');
   const [tables, setTables] = useState([]);
@@ -18,14 +19,17 @@ function TablesPage(props) {
   });
 
   const fetchData = async (restaurant_id) => {
+    console.log('Fetch Table Data');
     let endpoint = '/restaurants/' + restaurant_id + '/tables';
     const data = await ApiService.apiGet(endpoint);
+    console.log('After fetch table data')
     await setTables(data);
+    console.log('Afer set table')
   }
 
   useEffect(() => {
     fetchData(restaurant_id).catch(function (error) {
-      console.log('error in =>', error);
+      console.log('error when featch tables =>', error);
     });
   }, [restaurant_id]);
 
@@ -61,6 +65,10 @@ function TablesPage(props) {
     }, []
   )
 
+  if (!tables) {
+    return <div>Loadding...</div>;
+  }
+
   const renderTable = (table, index) => {
     return (
       <div key={index} className='border border-lime-600 rounded p-3'>
@@ -74,6 +82,8 @@ function TablesPage(props) {
         <div>
           <div className='font-bold text-gray-500'>{table.name}</div>
           <div className='align-right'>
+            <Link to={`/setup/restaurants/${restaurant_id}/print_qr_codes/${table.id}`} target="_blank">Print QR Code</Link>
+
             <TrashIcon
               onClick={() => {if(window.confirm('Delete the item?')) {handleDelete(table)}}}
               className="inline h-5 w-5 text-gray-500 hover:text-red-700 ml-2 float-right"/>
@@ -90,8 +100,13 @@ function TablesPage(props) {
 
   return (
     <div>
-      <div className='bg-gray-200 border rounded p-4 my-5'>
-        <h1 className='font-bold'>Tables ({props.restaurant.number_of_tables})</h1>
+      <div className='flex bg-gray-200 border rounded p-4 my-5'>
+        <div className='w-2/3'>
+          <h1 className='font-bold'>Tables ({props.restaurant.number_of_tables})</h1>
+        </div>
+        <div className='w-1/3 text-right'>
+        <Link to={`/setup/restaurants/${restaurant_id}/print_qr_codes/all_tables`} target="_blank">Print QR Codes for all tables</Link>
+      </div>
       </div>
 
       <div>

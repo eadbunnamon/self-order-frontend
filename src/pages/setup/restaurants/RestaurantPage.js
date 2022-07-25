@@ -110,11 +110,11 @@ function RestaurantPage() {
         </div>
 
         <div className={(openTab !== 2 && "hidden ") + "p-4 bg-gray-50 rounded-lg dark:bg-gray-800"} id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-          <CategoriesPage restaurant={restaurant} />
+          <CategoriesPage restaurant_id={id} restaurant={restaurant} />
         </div>
 
         <div className={(openTab !== 3 && "hidden ") + "p-4 bg-gray-50 rounded-lg dark:bg-gray-800"} id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-          <TablesPage restaurant={restaurant} />
+          <TablesPage restaurant_id={id} restaurant={restaurant} />
         </div>
       </div>
     </div>
