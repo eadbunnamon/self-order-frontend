@@ -65,11 +65,11 @@ function RestaurantPage() {
         <div className={(openTab !== 1 && "hidden ") + "p-4 bg-gray-50 rounded-lg dark:bg-gray-800"} id="profile" role="tabpanel" aria-labelledby="profile-tab">
           <div className='flex w-full bg-gray-200 border rounded p-4'>
             <div className='w-1/2'>
-              <h1>{restaurant.name}</h1>
+              <h1 className='text-slate-600'>{restaurant.name}</h1>
             </div>
             <div className='w-1/2 text-right'>
               <Link to={`/setup/edit_restaurant/${id}`}
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+                className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded'>
                 Edit
               </Link>
             </div>

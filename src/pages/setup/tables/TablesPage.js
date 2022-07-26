@@ -102,7 +102,7 @@ function TablesPage(props) {
     <div>
       <div className='flex bg-gray-200 border rounded p-4 my-5'>
         <div className='w-2/3'>
-          <h1 className='font-bold'>Tables ({props.restaurant.number_of_tables})</h1>
+          <h1 className='font-bold text-slate-600'>Tables ({props.restaurant.number_of_tables})</h1>
         </div>
         <div className='w-1/3 text-right'>
         <Link to={`/setup/restaurants/${restaurant_id}/print_qr_codes/all_tables`} target="_blank">Print QR Codes for all tables</Link>

@@ -36,7 +36,7 @@ function NewTablePage(props) {
     <div>
       <form onSubmit={handleSubmit}>
 
-        <div className='text-blue-500 text-sm mb-3'>
+        <div className='text-pink-500 text-sm mb-3'>
           <p>* ถ้าระบุ <b className='text-blue-600'>จำนวนโต๊ะ</b> จะได้ <b className='text-blue-600'>ชื่อโต๊ะ + ลำดับ</b> เช่น "ชื่อโต๊ะ 1", "ชื่อโต๊ะ 2", ...</p>
           <p>* ถ้าไม่ระบุ <b className='text-blue-600'>จำนวนโต๊ะ</b> จะได้ชื่อโต๊ะตามที่ระบุ</p>
         </div>
@@ -67,7 +67,7 @@ function NewTablePage(props) {
           </div>
           <div className='w-2/3 ml-3 mt-6'>
             <div className='flex items-center justify-between'>
-              <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+              <button type='submit' className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded'>
                 เพิ่ม
               </button>
             </div>

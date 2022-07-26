@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
 
+import Modal from '../../../components/Modal';
+
 function ItemsPage() {
   let params = useParams();
   const category_id = params['category_id'];
@@ -11,6 +13,7 @@ function ItemsPage() {
   // const queryParams = new URLSearchParams(window.location.search);
   // const category_name = queryParams.get("category_name");
 
+  const [showModal, setShowModal] = React.useState(false);
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState({});
 
@@ -37,7 +40,7 @@ function ItemsPage() {
         <td></td>
         <td></td>
         <td>
-          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded'>
+          <button className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-4 rounded'>
             Edit
           </button>
         </td>
@@ -55,9 +58,19 @@ function ItemsPage() {
             </h1>
           </div>
           <div className='w-1/2 text-right'>
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-              + Create new item
-            </button>
+            <Modal
+              buttonName={'+ Create new item'}
+              title={'Modal Component'}
+              showModal={showModal}
+              setShowModal={setShowModal}>
+              <p>
+                I always felt like I could do anything. That’s the main
+                thing people are controlled by! Thoughts- their perception
+                of themselves! They're slowed down by their perception of
+                themselves. If you're taught you can’t do anything, you
+                won’t do anything. I was taught I could do everything.
+              </p>
+            </Modal>
           </div>
         </div>
       </div>

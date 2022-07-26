@@ -47,7 +47,7 @@ function EditTablePage(props) {
             onChange={handleChange} />
         </div>
         <div className='mt-3'>
-          <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+          <button type='submit' className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded'>
             บันทึก
           </button>
           <button

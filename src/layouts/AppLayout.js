@@ -20,7 +20,9 @@ const AppLayout = () => {
           <div className='w-1/3 mx-4'>
             <Link to='/' className='hover:text-sky-500 dark:hover:text-sky-400'>Logo</Link>
           </div>
-          <div className='w-1/3 mx-4 text-center font-bold'><h1>Self-Order</h1></div>
+          <div className='w-1/3 mx-4 text-center font-bold'>
+            <h1 className='text-3xl text-slate-600'>Self-Order</h1>
+          </div>
           <div className='w-1/3 mx-4 text-right'>
             {LoginSession.current ? (
               <div>

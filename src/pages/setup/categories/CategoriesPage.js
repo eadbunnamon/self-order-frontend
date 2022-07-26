@@ -116,7 +116,7 @@ function CategoriesPage(props) {
   return (
     <div>
       <div className='bg-gray-200 border rounded p-4 my-5'>
-        <h1 className='font-bold'>ประเภทเมนูอาหาร</h1>
+        <h1 className='font-bold text-slate-600'>ประเภทเมนูอาหาร</h1>
       </div>
 
       <div>

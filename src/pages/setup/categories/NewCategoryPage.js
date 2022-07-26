@@ -58,7 +58,7 @@ function NewCategoryPage(props) {
           </div>
           <div className='w-1/3 ml-3'>
             <div className='flex items-center justify-between'>
-              <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+              <button type='submit' className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded'>
                 เพิ่ม
               </button>
             </div>

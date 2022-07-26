@@ -78,7 +78,7 @@ function EditCategoryPage(props) {
             {category.items_count} รายการ
           </div>
           <div className='w-1/2 text-right'>
-            <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded'>
+            <button type='submit' className='bg-pink-500 hover:bg-pink-700 text-white font-bold p-2 rounded'>
               บันทึก
             </button>
             <button

@@ -78,8 +78,8 @@ function LoginPage() {
               </div>
 
               <div className='flex items-center justify-between'>
-                <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>เข้าสู่ระบบ</button>
-                <Link className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" to="/">
+                <button type='submit' className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded'>เข้าสู่ระบบ</button>
+                <Link className="inline-block align-baseline font-bold text-sm text-pink-500 hover:text-pink-800" to="/">
                   Forgot Password?
                 </Link>
               </div>

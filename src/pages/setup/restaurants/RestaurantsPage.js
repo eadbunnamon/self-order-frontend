@@ -42,10 +42,10 @@ function RestaurantsPage() {
       <div className='my-4'>
         <div className='flex w-full'>
           <div className='w-1/2'>
-            <h1 className="text-3xl font-bold">Restaurants</h1>
+            <h1 className="text-3xl font-bold text-slate-600">Restaurants</h1>
           </div>
           <div className='w-1/2 text-right'>
-            <Link to='/setup/create_restaurant' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+            <Link to='/setup/create_restaurant' className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded'>
               + Create new restaurant
             </Link>
           </div>
