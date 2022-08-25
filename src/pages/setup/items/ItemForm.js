@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ApiService from '../../../services/api_service';
 import ErrorMessage from '../../../components/ErrorMessage';
 import _ from 'lodash';
@@ -70,6 +70,18 @@ export default function ItemForm(props) {
     setItem({...item, 'options_attributes': updateOption});
   }
 
+  const handleSetDefault = (event, index) => {
+    console.log(event.target.name)
+    const updateOption = item.options_attributes.map((obj, inx) => {
+      if (inx === index) {
+        return {...obj, [event.target.name]: true};
+      } else {
+        return {...obj, [event.target.name]: false};
+      }
+    });
+    setItem({...item, 'options_attributes': updateOption});
+  }
+
   return (
     <>
       {/*body*/}
@@ -107,7 +119,11 @@ export default function ItemForm(props) {
               </div>
             </div>
 
-            <Options item={item} handleAddOption={handleAddOption} handleChangeOption={handleChangeOption} />
+            <Options
+              item={item}
+              handleAddOption={handleAddOption}
+              handleChangeOption={handleChangeOption}
+              handleSetDefault={handleSetDefault} />
           </div>
         </div>
         {/*footer*/}

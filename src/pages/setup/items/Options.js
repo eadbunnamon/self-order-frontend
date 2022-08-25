@@ -27,9 +27,10 @@ export default function Options(props) {
         <div className='w-1/3'>
           <input
             type='radio'
-            defaultChecked={option.is_default}
+            checked={option.is_default}
             id={`is_default_${index}`}
-            name="is_default" />
+            name="is_default"
+            onChange={(e) => props.handleSetDefault(e, index)} />
         </div>
       </div>
     );
