@@ -101,7 +101,7 @@ function CategoriesPage(props) {
                 </div>
                 <div className='w-1/2 text-right'>
                   <Link to={`/setup/${restaurant_id}/${category.id}/items`}
-                    className='ml-3 bg-lime-500 hover:bg-lime-700 text-white px-2 py-2 rounded'>
+                    className='ml-3 bg-slate-500 hover:bg-slate-600 text-white px-2 py-2 rounded'>
                     จัดการเมนูอาหาร
                   </Link>
                 </div>

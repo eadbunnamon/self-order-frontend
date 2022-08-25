@@ -55,6 +55,20 @@ export class ApiService {
       throw error
     });
   }
+
+  request(url, method, payload={}) {
+    return adminApi.request({
+      method: method,
+      url: url,
+      data: payload
+    })
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      throw error
+    });
+  }
 }
 
 export default new ApiService();

@@ -4,6 +4,7 @@ import ApiService from '../../../services/api_service';
 import _ from 'lodash';
 
 import Modal from '../../../components/Modal';
+import ItemForm from './ItemForm';
 
 function ItemsPage() {
   let params = useParams();
@@ -16,6 +17,7 @@ function ItemsPage() {
   const [showModal, setShowModal] = React.useState(false);
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState({});
+  const [editItem, setEditItem] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,12 +42,28 @@ function ItemsPage() {
         <td></td>
         <td></td>
         <td>
-          <button className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-4 rounded'>
+          <button
+            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            onClick={() => openItemForm(item)}>
             Edit
           </button>
         </td>
       </tr>
     )
+  }
+
+  const openItemForm = (item = {}) => {
+    const fetchItem = async () => {
+      let endpoint = `/categories/${category_id}/items/${item.id}`;
+      const data = await ApiService.apiGet(endpoint);
+      setEditItem(data);
+      setShowModal(true);
+    }
+
+    fetchItem().catch(function (error) {
+      console.log('error =>', error);
+    });
   }
 
   return (
@@ -58,19 +76,12 @@ function ItemsPage() {
             </h1>
           </div>
           <div className='w-1/2 text-right'>
-            <Modal
-              buttonName={'+ Create new item'}
-              title={'Modal Component'}
-              showModal={showModal}
-              setShowModal={setShowModal}>
-              <p>
-                I always felt like I could do anything. That’s the main
-                thing people are controlled by! Thoughts- their perception
-                of themselves! They're slowed down by their perception of
-                themselves. If you're taught you can’t do anything, you
-                won’t do anything. I was taught I could do everything.
-              </p>
-            </Modal>
+            <button
+              className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => openItemForm()}>
+              {'+ Create new item'}
+            </button>
           </div>
         </div>
       </div>
@@ -89,6 +100,16 @@ function ItemsPage() {
           {(!_.isEmpty(items)) && _.map(items, renderItem)}
         </tbody>
       </table>
+
+      <Modal
+        title={'Modal Component'}
+        showModal={showModal}
+        setShowModal={setShowModal}>
+        <ItemForm
+          category_id={category_id}
+          editItem={editItem}
+          setShowModal={setShowModal} />
+      </Modal>
     </div>
   );
 };
