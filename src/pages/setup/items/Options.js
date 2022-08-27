@@ -38,7 +38,7 @@ export default function Options(props) {
         </div>
 
         <div className='flex my-5'>
-          <div className='w-2/6 mr-3'>
+          <div className='w-1/3 mr-3'>
             <div className='text-gray-700 font-bold'>&nbsp;</div>
             <input
               type='checkbox'
@@ -48,7 +48,7 @@ export default function Options(props) {
               onChange={(e) => props.handleSetFlag(e, index)} />
               <label className='text-gray-700 font-bold ml-3'>Need to choose</label>
           </div>
-          <div className='w-1/6 mr-3'>
+          <div className='w-1/3 mr-3'>
             <div className='text-gray-700 font-bold'>
               Minimum choose<span className='text-red-500 ml-1'>*</span>
             </div>
@@ -59,7 +59,7 @@ export default function Options(props) {
               value={option.minimum_choose || 0}
               onChange={(e) => props.handleChangeOption(e, index)} />
           </div>
-          <div className='w-1/6'>
+          <div className='w-1/3'>
             <div className='text-gray-700 font-bold'>
               Maximum choose
             </div>
@@ -70,7 +70,6 @@ export default function Options(props) {
               value={option.maximum_choose || ''}
               onChange={(e) => props.handleChangeOption(e, index)} />
           </div>
-          <div className='w-2/6'></div>
         </div>
 
         <SubOptions {...props} option={option} option_index={index} />
