@@ -10,20 +10,54 @@ export default function ItemForm(props) {
   const category_id = editItem.category_id;
   const [error_message, setErrorMessage] = useState('');
 
-  console.log('editItem ==>', editItem);
-
   const default_option = [
-    {size: '', price: '', is_default: true}
+    {
+      name: '',
+      name_en: '',
+      need_to_choose: false,
+      minimum_choose: 0,
+      maximum_choose: '',
+      sub_options_attributes: [
+        { name: '', name_en: '', additional_price: 0 }
+      ]
+    }
   ]
+
+  const default_sub_option = [
+    { name: '', name_en: '', additional_price: 0 }
+  ]
+
+  const editOption = () => {
+    const option_obj = editItem.options.map(option => {
+      const sub_options = option.sub_options.map(sub_option => {
+        return {
+          name: sub_option.name,
+          name_en: sub_option.name_en, 
+          additional_price: sub_option.additional_price
+        }
+      });
+
+      return {
+        name: option.name,
+        name_en: option.name_en,
+        need_to_choose: option.need_to_choose,
+        minimum_choose: option.minimum_choose,
+        maximum_choose: option.maximum_choose,
+        sub_options_attributes: sub_options
+      }
+    });
+    return option_obj;
+  }
 
   const [item, setItem] = useState({
     id: editItem.id || '',
     name: editItem.name || '',
+    price: editItem.price || '',
     name_en: editItem.name_en || '',
     image_attributes: {
       file: ''
     },
-    options_attributes: _.isEmpty(editItem.options) ? default_option : editItem.options
+    options_attributes: _.isEmpty(editItem.options) ? [] : editOption()
   });
 
   const handleSubmit = (event) => {
@@ -55,7 +89,7 @@ export default function ItemForm(props) {
   }
 
   const handleAddOption = (item) => {
-    const options = _.concat(item.options_attributes, {size: '', price: '', is_default: false});
+    const options = _.concat(item.options_attributes, default_option[0]);
     setItem({...item, 'options_attributes': options});
   }
 
@@ -70,7 +104,35 @@ export default function ItemForm(props) {
     setItem({...item, 'options_attributes': updateOption});
   }
 
-  const handleSetDefault = (event, index) => {
+  const handleAddSubOption = (option, option_index) => {
+    const updateOption = item.options_attributes.map((option_obj, inx) => {
+      if (option_index === inx) {
+        const sub_options = _.concat(option_obj.sub_options_attributes, default_sub_option[0]);
+        return {...option_obj, 'sub_options_attributes': sub_options};
+      }
+      // otherwise return object as is
+      return option_obj;
+    });
+    setItem({...item, 'options_attributes': updateOption});
+  }
+
+  const handleChangeSubOption = (event, option_index, index) => {
+    const updateSubOption = item.options_attributes.map((option_obj, inx) => {
+      if (inx === option_index) {
+        option_obj.sub_options_attributes.map((sub_option_obj, i) => {
+          if (i === index) {
+            const sub_obj = {...sub_option_obj, [event.target.name]: event.target.value};
+            return {...option_obj, 'sub_options_attributes': sub_obj};
+          }
+        });
+      }
+      // otherwise return object as is
+      return option_obj;
+    });
+    setItem({...item, 'options_attributes': updateSubOption});
+  }
+
+  const handleSetFlag = (event, index) => {
     console.log(event.target.name)
     const updateOption = item.options_attributes.map((obj, inx) => {
       if (inx === index) {
@@ -94,7 +156,7 @@ export default function ItemForm(props) {
 
             <div className='flex'>
               <div className='w-1/2 mr-5'>
-                <div className='text-gray-500'>
+                <div className='text-gray-700 font-bold'>
                   ชื่อเมนู<span className='text-red-500 ml-1'>*</span>
                 </div>
                 <input 
@@ -106,7 +168,7 @@ export default function ItemForm(props) {
                   onChange={handleChange} />
               </div>
               <div className='w-1/2'>
-                <div className='text-gray-500'>
+                <div className='text-gray-700 font-bold'>
                   ชื่อเมนู (English)<span className='text-red-500 ml-1'>*</span>
                 </div>
                 <input 
@@ -123,7 +185,9 @@ export default function ItemForm(props) {
               item={item}
               handleAddOption={handleAddOption}
               handleChangeOption={handleChangeOption}
-              handleSetDefault={handleSetDefault} />
+              handleAddSubOption={handleAddSubOption}
+              handleChangeSubOption={handleChangeSubOption}
+              handleSetFlag={handleSetFlag} />
           </div>
         </div>
         {/*footer*/}
