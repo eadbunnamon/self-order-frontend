@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ApiService from '../../../services/api_service';
 import ErrorMessage from '../../../components/ErrorMessage';
 import _ from 'lodash';
@@ -12,6 +12,7 @@ export default function ItemForm(props) {
 
   const default_option = [
     {
+      id: '',
       name: '',
       name_en: '',
       need_to_choose: false,
@@ -24,13 +25,14 @@ export default function ItemForm(props) {
   ]
 
   const default_sub_option = [
-    { name: '', name_en: '', additional_price: 0 }
+    { id: '', name: '', name_en: '', additional_price: 0 }
   ]
 
   const editOption = () => {
     const option_obj = editItem.options.map(option => {
       const sub_options = option.sub_options.map(sub_option => {
         return {
+          id: sub_option.id,
           name: sub_option.name,
           name_en: sub_option.name_en, 
           additional_price: sub_option.additional_price
@@ -38,6 +40,7 @@ export default function ItemForm(props) {
       });
 
       return {
+        id: option.id,
         name: option.name,
         name_en: option.name_en,
         need_to_choose: option.need_to_choose,
@@ -75,6 +78,7 @@ export default function ItemForm(props) {
       const payload = { item: item };
       await ApiService.request(endpoint, method, payload);
       props.setShowModal(false);
+      props.reloadUpdatedItem(item);
     }
 
     updateData().catch(function (error) {
@@ -119,16 +123,20 @@ export default function ItemForm(props) {
   const handleChangeSubOption = (event, option_index, index) => {
     const updateSubOption = item.options_attributes.map((option_obj, inx) => {
       if (inx === option_index) {
-        option_obj.sub_options_attributes.map((sub_option_obj, i) => {
+        const new_sub_option_obj = option_obj.sub_options_attributes.map((sub_option_obj, i) => {
           if (i === index) {
-            const sub_obj = {...sub_option_obj, [event.target.name]: event.target.value};
-            return {...option_obj, 'sub_options_attributes': sub_obj};
+            return {...sub_option_obj, [event.target.name]: event.target.value};
           }
+          // otherwise return object as is
+          return sub_option_obj;
         });
+        console.log('new_sub_option_obj =>', new_sub_option_obj);
+        return {...option_obj, 'sub_options_attributes': new_sub_option_obj};
       }
       // otherwise return object as is
       return option_obj;
     });
+    console.log('updateSubOption ==>', updateSubOption)
     setItem({...item, 'options_attributes': updateSubOption});
   }
 
@@ -148,14 +156,14 @@ export default function ItemForm(props) {
     <>
       {/*body*/}
       <form onSubmit={handleSubmit}>
-        <div className="relative p-6 flex-auto text-left">
+        <div className="relative py-4 px-5 flex-auto text-left">
           <div className="text-slate-500 text-lg leading-relaxed">
             <div>
               {error_message && <ErrorMessage error_message={error_message} />}
             </div>
 
             <div className='flex'>
-              <div className='w-1/2 mr-5'>
+              <div className='w-1/3 mr-4'>
                 <div className='text-gray-700 font-bold'>
                   ชื่อเมนู<span className='text-red-500 ml-1'>*</span>
                 </div>
@@ -167,7 +175,7 @@ export default function ItemForm(props) {
                   value={item.name || ''}
                   onChange={handleChange} />
               </div>
-              <div className='w-1/2'>
+              <div className='w-1/3 mr-4'>
                 <div className='text-gray-700 font-bold'>
                   ชื่อเมนู (English)<span className='text-red-500 ml-1'>*</span>
                 </div>
@@ -177,6 +185,18 @@ export default function ItemForm(props) {
                   id="name_en"
                   name="name_en"
                   value={item.name_en || ''}
+                  onChange={handleChange} />
+              </div>
+              <div className='w-1/3'>
+                <div className='text-gray-700 font-bold'>
+                  ราคา<span className='text-red-500 ml-1'>*</span>
+                </div>
+                <input 
+                  type="text"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="price"
+                  name="price"
+                  value={item.price || ''}
                   onChange={handleChange} />
               </div>
             </div>
@@ -193,12 +213,12 @@ export default function ItemForm(props) {
         {/*footer*/}
         <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
           {<button
-            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-3 mb-1 ease-linear transition-all duration-150"
             type="submit">
             Save Changes
           </button>}
           <button
-            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             onClick={() => props.setShowModal(false)}>
             Close

@@ -1,11 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 
+// import { ChevronDoubleRightIcon } from '@heroicons/react/solid';
+
 export default function SubOptions(props) {
   const option = props.option;
   const sub_options = option.sub_options_attributes;
-
-  console.log('sub_options ==>', sub_options)
 
   const renderSubOption = (sub_option, index) => {
     return (
@@ -41,9 +41,11 @@ export default function SubOptions(props) {
   }
 
   return (
-    <div className='ml-5'>
-      <div className='mt-3'>
-        <label className='font-bold text-gray-600'>Sub Options</label>
+    <div className='p-4'>
+      <div>
+        <label className='font-bold text-gray-600'>
+          Sub Options
+        </label>
       </div>
 
       <div className='flex text-gray-500 mb-3'>
@@ -59,7 +61,7 @@ export default function SubOptions(props) {
           <button
             onClick={() => props.handleAddSubOption(option, props.option_index)}
             type="button"
-            className="bg-pink-500 hover:bg-pink-700 text-white px-2 rounded">
+            className="bg-gray-400 hover:bg-gray-600 text-white px-2 rounded">
             + Sub Option
           </button>
         </div>

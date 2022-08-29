@@ -39,6 +39,7 @@ function ItemsPage() {
       <tr key={index}>
         <td>{item.name}</td>
         <td>{item.name_en}</td>
+        <td>{item.price}</td>
         <td></td>
         <td></td>
         <td>
@@ -66,6 +67,16 @@ function ItemsPage() {
     });
   }
 
+  const reloadUpdatedItem = (item) => {
+    const updateItem = items.map(i => {
+      if (i.id === item.id) {
+        return {...i, 'name': item.name, 'name_en': item.name_en, 'price': item.price};
+      }
+      return i;
+    });
+    setItems(updateItem);
+  }
+
   return (
     <div>
       <div className='my-4'>
@@ -91,6 +102,7 @@ function ItemsPage() {
           <tr>
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Item Name</th>
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Item Name (EN)</th>
+            <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Price</th>
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Options</th>
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Image</th>
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Actions</th>
@@ -108,7 +120,8 @@ function ItemsPage() {
         <ItemForm
           category_id={category_id}
           editItem={editItem}
-          setShowModal={setShowModal} />
+          setShowModal={setShowModal}
+          reloadUpdatedItem={reloadUpdatedItem} />
       </Modal>
     </div>
   );
