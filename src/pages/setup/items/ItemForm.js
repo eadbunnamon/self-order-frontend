@@ -130,13 +130,11 @@ export default function ItemForm(props) {
           // otherwise return object as is
           return sub_option_obj;
         });
-        console.log('new_sub_option_obj =>', new_sub_option_obj);
         return {...option_obj, 'sub_options_attributes': new_sub_option_obj};
       }
       // otherwise return object as is
       return option_obj;
     });
-    console.log('updateSubOption ==>', updateSubOption)
     setItem({...item, 'options_attributes': updateSubOption});
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import { TrashIcon } from '@heroicons/react/solid';
 
 // import { ChevronDoubleRightIcon } from '@heroicons/react/solid';
 
@@ -28,12 +29,19 @@ export default function SubOptions(props) {
               onChange={(e) => props.handleChangeSubOption(e, props.option_index, index)} />
           </div>
           <div className='w-1/3 mr-3'>
-            <input type='integer'
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id={`additional_price_${index}`}
-              name="additional_price"
-              value={sub_option.additional_price || 0}
-              onChange={(e) => props.handleChangeSubOption(e, props.option_index, index)} />
+            <div className='flex'>
+              <div className='w-1/2 mr-3'>
+                <input type='integer'
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id={`additional_price_${index}`}
+                  name="additional_price"
+                  value={sub_option.additional_price || 0}
+                  onChange={(e) => props.handleChangeSubOption(e, props.option_index, index)} />
+              </div>
+              <div className='w-1/2 mr-3'>
+                <TrashIcon className='h-5 w-5 mt-3 ml-6 text-gray-500 hover:text-gray-700' />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -114,7 +114,7 @@ function ItemsPage() {
       </table>
 
       <Modal
-        title={'Modal Component'}
+        title={editItem.name}
         showModal={showModal}
         setShowModal={setShowModal}>
         <ItemForm

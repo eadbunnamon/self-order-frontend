@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import { TrashIcon } from '@heroicons/react/solid';
 
 import SubOptions from './SubOptions';
 
@@ -10,7 +11,12 @@ export default function Options(props) {
   const renderOption = (option, index) => {
     return (
       <div key={index} className='border border-2 mb-4 border-blue-500 rounded'>
-        <div className='font-bold bg-gray-300 p-2'>{`Option #${index + 1}`}</div>
+        <div className='flex font-bold bg-gray-300 p-2'>
+          <div className='w-1/2'>{`Option #${index + 1}`}</div>
+          <div className='w-1/2'>
+            <TrashIcon className='h-6 w-6 float-right text-gray-500 hover:text-gray-700' />
+          </div>
+        </div>
 
         <div className='flex bg-gray-200 p-3'>
           <div className='w-1/2'>
