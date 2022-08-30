@@ -19,39 +19,26 @@ function ItemsPage() {
   const [category, setCategory] = useState({});
   const [editItem, setEditItem] = useState({});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      let endpoint = `/categories/${category_id}/items`;
-      const data = await ApiService.apiGet(endpoint);
-      setItems(data);
-      let categoryEndpoint = `/restaurants/${restaurant_id}/categories/${category_id}`;
-      const categoryData = await ApiService.apiGet(categoryEndpoint);
-      setCategory(categoryData);
-    }
+  const fetchData = async (category_id, restaurant_id) => {
+    let endpoint = `/categories/${category_id}/items`;
+    const data = await ApiService.apiGet(endpoint);
+    setItems(data);
+    let categoryEndpoint = `/restaurants/${restaurant_id}/categories/${category_id}`;
+    const categoryData = await ApiService.apiGet(categoryEndpoint);
+    setCategory(categoryData);
+  }
 
-    fetchData().catch(function (error) {
+  useEffect(() => {
+    fetchData(category_id, restaurant_id).catch(function (error) {
       console.log('error =>', error);
     });
   }, [category_id, restaurant_id]);
 
-  const renderItem = (item, index) => {
-    return (
-      <tr key={index}>
-        <td>{item.name}</td>
-        <td>{item.name_en}</td>
-        <td>{item.price}</td>
-        <td></td>
-        <td></td>
-        <td>
-          <button
-            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            type="button"
-            onClick={() => openItemForm(item)}>
-            Edit
-          </button>
-        </td>
-      </tr>
-    )
+  const default_item = {
+    name: '',
+    name_en: '',
+    price: '',
+    category_id: category_id
   }
 
   const openItemForm = (item = {}) => {
@@ -67,14 +54,35 @@ function ItemsPage() {
     });
   }
 
-  const reloadUpdatedItem = (item) => {
-    const updateItem = items.map(i => {
-      if (i.id === item.id) {
-        return {...i, 'name': item.name, 'name_en': item.name_en, 'price': item.price};
-      }
-      return i;
+  const openNewItemForm = () => {
+    setEditItem(default_item);
+    setShowModal(true);
+  }
+
+  const reloadItems = () => {
+    fetchData(category_id, restaurant_id).catch(function (error) {
+      console.log('error =>', error);
     });
-    setItems(updateItem);
+  }
+
+  const renderItem = (item, index) => {
+    return (
+      <tr key={index}>
+        <td className='p-3 border'>{item.name}</td>
+        <td className='p-3 border'>{item.name_en}</td>
+        <td className='p-3 border'>{item.price}</td>
+        <td className='p-3 border'>{_.size(item.options)}</td>
+        <td className='p-3 border'></td>
+        <td className='p-3 border'>
+          <button
+            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            onClick={() => openItemForm(item)}>
+            Edit
+          </button>
+        </td>
+      </tr>
+    )
   }
 
   return (
@@ -90,7 +98,7 @@ function ItemsPage() {
             <button
               className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
-              onClick={() => openItemForm()}>
+              onClick={() => openNewItemForm()}>
               {'+ Create new item'}
             </button>
           </div>
@@ -121,7 +129,7 @@ function ItemsPage() {
           category_id={category_id}
           editItem={editItem}
           setShowModal={setShowModal}
-          reloadUpdatedItem={reloadUpdatedItem} />
+          reloadItems={reloadItems} />
       </Modal>
     </div>
   );

@@ -10,11 +10,13 @@ export default function Options(props) {
 
   const renderOption = (option, index) => {
     return (
-      <div key={index} className='border border-2 mb-4 border-blue-500 rounded'>
+      <div key={index} className={`border border-2 mb-4 border-blue-500 rounded ${option._destroy && 'hidden'}`}>
         <div className='flex font-bold bg-gray-300 p-2'>
           <div className='w-1/2'>{`Option #${index + 1}`}</div>
           <div className='w-1/2'>
-            <TrashIcon className='h-6 w-6 float-right text-gray-500 hover:text-gray-700' />
+            <TrashIcon
+              onClick={() => { props.handleDeleteOption(option, index) }}
+              className='h-6 w-6 float-right text-gray-500 hover:text-gray-700' />
           </div>
         </div>
 
@@ -55,7 +57,7 @@ export default function Options(props) {
                 id={`need_to_choose_${index}`}
                 name="need_to_choose"
                 className='mt-3 mb-4'
-                onChange={(e) => props.handleSetFlag(e, index)} />
+                onChange={(e) => props.hendleCheckbox(e, index)} />
             </div>
 
             <div className='flex'>
@@ -64,7 +66,8 @@ export default function Options(props) {
                   <div className='text-gray-700 font-bold'>
                     Minimum choose<span className='text-red-500 ml-1'>*</span>
                   </div>
-                  <input type='integer'
+                  <input type='number'
+                    pattern="[0-9]*"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id={`minimum_choose_${index}`}
                     name="minimum_choose"
@@ -77,7 +80,8 @@ export default function Options(props) {
                   <div className='text-gray-700 font-bold'>
                     Maximum choose
                   </div>
-                  <input type='integer'
+                  <input type='number'
+                    pattern="[0-9]*"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id={`maximum_choose_${index}`}
                     name="maximum_choose"

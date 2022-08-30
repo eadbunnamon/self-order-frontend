@@ -70,7 +70,7 @@ export default function ItemForm(props) {
     const updateData = async () => {
       let endpoint = `/categories/${category_id}/items`;
       let method = 'post';
-      if (!_.isEmpty(editItem)) {
+      if (editItem?.id) {
         endpoint = `/categories/${category_id}/items/${editItem.id}`;
         method = 'put';
       }
@@ -78,13 +78,45 @@ export default function ItemForm(props) {
       const payload = { item: item };
       await ApiService.request(endpoint, method, payload);
       props.setShowModal(false);
-      props.reloadUpdatedItem(item);
+      props.reloadItems();
     }
 
     updateData().catch(function (error) {
       const error_message = error.response.data.error.message;
       setErrorMessage(error_message);
     });
+  }
+
+  const handleDeleteOption = (option, index) => {
+    // _.remove(item.options_attributes, function(opt, inx) {
+    //   return (index === inx && !opt?.id); //remove if match condition
+    // });
+
+    const updateOption = item.options_attributes.map((option_obj, i) => {
+      if (i === index) {
+        return {...option_obj, '_destroy': true};
+      }
+      return option_obj;
+    });
+
+    setItem({...item, 'options_attributes': updateOption});
+  }
+
+  const handleDeleteSubOption = (option, option_index, sub_option, index) => {
+    const updateOption = item.options_attributes.map((option_obj, inx) => {
+      if (inx === option_index) {
+        const new_sub_option_obj = option_obj.sub_options_attributes.map((sub_option_obj, i) => {
+          if (i === index) {
+            return {...sub_option_obj, '_destroy': true};
+          }
+          return sub_option_obj;
+        });
+        return {...option_obj, 'sub_options_attributes': new_sub_option_obj};
+      }
+      return option_obj;
+    });
+
+    setItem({...item, 'options_attributes': updateOption});
   }
 
   const handleChange = (e) => {
@@ -139,13 +171,22 @@ export default function ItemForm(props) {
   }
 
   const handleSetFlag = (event, index) => {
-    console.log(event.target.name)
     const updateOption = item.options_attributes.map((obj, inx) => {
       if (inx === index) {
         return {...obj, [event.target.name]: true};
       } else {
         return {...obj, [event.target.name]: false};
       }
+    });
+    setItem({...item, 'options_attributes': updateOption});
+  }
+
+  const hendleCheckbox = (event, index) => {
+    const updateOption = item.options_attributes.map((obj, inx) => {
+      if (inx === index) {
+        return {...obj, [event.target.name]: obj[event.target.name] === false ? true : false};
+      }
+      return obj;
     });
     setItem({...item, 'options_attributes': updateOption});
   }
@@ -205,7 +246,10 @@ export default function ItemForm(props) {
               handleChangeOption={handleChangeOption}
               handleAddSubOption={handleAddSubOption}
               handleChangeSubOption={handleChangeSubOption}
-              handleSetFlag={handleSetFlag} />
+              handleSetFlag={handleSetFlag}
+              hendleCheckbox={hendleCheckbox}
+              handleDeleteOption={handleDeleteOption}
+              handleDeleteSubOption={handleDeleteSubOption} />
           </div>
         </div>
         {/*footer*/}
