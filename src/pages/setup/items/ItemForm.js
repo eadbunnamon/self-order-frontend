@@ -197,9 +197,6 @@ export default function ItemForm(props) {
       <form onSubmit={handleSubmit}>
         <div className="relative py-4 px-5 flex-auto text-left">
           <div className="text-slate-500 text-lg leading-relaxed">
-            <div>
-              {error_message && <ErrorMessage error_message={error_message} />}
-            </div>
 
             <div className='flex'>
               <div className='w-1/3 mr-4'>
@@ -250,6 +247,10 @@ export default function ItemForm(props) {
               hendleCheckbox={hendleCheckbox}
               handleDeleteOption={handleDeleteOption}
               handleDeleteSubOption={handleDeleteSubOption} />
+          </div>
+
+          <div className='mt-3'>
+            {error_message && <ErrorMessage error_message={error_message} />}
           </div>
         </div>
         {/*footer*/}
