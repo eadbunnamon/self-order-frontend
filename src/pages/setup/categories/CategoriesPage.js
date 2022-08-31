@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
-import { TrashIcon, PencilIcon } from '@heroicons/react/solid'
+import { TrashIcon, PencilIcon } from '@heroicons/react/solid';
 
 import ErrorMessage from '../../../components/ErrorMessage';
 import NewCategoryPage from './NewCategoryPage';

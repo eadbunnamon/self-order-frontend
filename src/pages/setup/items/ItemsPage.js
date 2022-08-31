@@ -18,6 +18,7 @@ function ItemsPage() {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState({});
   const [editItem, setEditItem] = useState({});
+  const [error_message, setErrorMessage] = useState('');
 
   const fetchData = async (category_id, restaurant_id) => {
     let endpoint = `/categories/${category_id}/items`;
@@ -65,6 +66,23 @@ function ItemsPage() {
     });
   }
 
+  const handleDeleteItem = (item) => {
+    const deleteItem = async () => {
+      let endpoint =  `/categories/${category_id}/items/${item.id}`;
+      await ApiService.apiDelete(endpoint);
+
+      fetchData(category_id, restaurant_id).catch(function (error) {
+        const error_message = error.response.data.error.message;
+        setErrorMessage(error_message);
+      });
+    }
+
+    deleteItem().catch(function (error) {
+      const error_message = error.response.data.error.message;
+      setErrorMessage(error_message);
+    });
+  }
+
   const renderItem = (item, index) => {
     return (
       <tr key={index}>
@@ -75,10 +93,17 @@ function ItemsPage() {
         <td className='p-3 border'></td>
         <td className='p-3 border'>
           <button
-            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mr-3"
             type="button"
             onClick={() => openItemForm(item)}>
             Edit
+          </button>
+
+          <button
+            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            onClick={() => {if(window.confirm('Delete the item?')) {handleDeleteItem(item)}}} >
+            Delete
           </button>
         </td>
       </tr>
