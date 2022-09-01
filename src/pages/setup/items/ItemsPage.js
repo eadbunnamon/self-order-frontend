@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import ApiService from '../../../services/api_service';
 import _ from 'lodash';
 
@@ -116,7 +116,11 @@ function ItemsPage() {
         <div className='flex w-full'>
           <div className='w-1/2'>
             <h1 className="text-3xl font-bold">
-              <span className="text-slate-400">{category.restaurant_name}/</span>{category.name}
+              <Link to={`/setup/restaurants/${restaurant_id}`}
+                className='text-slate-500 inline'>
+                {category.restaurant_name}
+              </Link>
+              <div className='inline'> / {category.name}</div>
             </h1>
           </div>
           <div className='w-1/2 text-right'>
@@ -138,7 +142,7 @@ function ItemsPage() {
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Price</th>
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Options</th>
             <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Image</th>
-            <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200'>Actions</th>
+            <th className='border-b bg-gray-200 dark:border-slate-600 font-medium p-3 text-slate-600 dark:text-slate-200 w-64'>Actions</th>
           </tr>
         </thead>
         <tbody>

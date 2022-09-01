@@ -42,7 +42,7 @@ function PrintQrPage(props) {
   }
 
   return (
-    <div className='grid grid-cols-3 gap-4 mt-6'>
+    <div className='grid grid-cols-2 gap-4 mt-6'>
       {tables && _.map(tables, renderTableQRCode)}
     </div>
   )

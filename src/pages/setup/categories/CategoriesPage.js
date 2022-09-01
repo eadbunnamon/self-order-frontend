@@ -79,8 +79,8 @@ function CategoriesPage(props) {
             handleReload={handleReload} />
         ) : (
           <div>
-            <div>{category.name}</div>
-            <div className='text-slate-400'>({category.name_en})</div>
+            <div className='font-bold'>{category.name}</div>
+            <div className='text-slate-400 font-bold'>({category.name_en})</div>
 
             <div className='mt-3'>
               <div className='text-slate-600'>
@@ -101,7 +101,7 @@ function CategoriesPage(props) {
                 </div>
                 <div className='w-1/2 text-right'>
                   <Link to={`/setup/${restaurant_id}/${category.id}/items`}
-                    className='ml-3 bg-slate-500 hover:bg-slate-600 text-white px-2 py-2 rounded'>
+                    className='bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-3 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150'>
                     จัดการเมนูอาหาร
                   </Link>
                 </div>
@@ -127,8 +127,10 @@ function CategoriesPage(props) {
         restaurant_id={restaurant_id}
         handleReload={handleReload} />
 
-      <div className="grid grid-cols-3 gap-4 mt-6">
-        {categories && _.map(categories, renderCategory)}
+      <div className='p-4'>
+        <div className="grid grid-cols-3 gap-4">
+          {categories && _.map(categories, renderCategory)}
+        </div>
       </div>
     </div>
   );

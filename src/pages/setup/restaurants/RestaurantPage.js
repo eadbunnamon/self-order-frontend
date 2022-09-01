@@ -76,33 +76,33 @@ function RestaurantPage() {
           </div>
 
           <div className='flex mt-5'>
-            <div className='w-1/2 border-l-4 border-lime-600 px-3'>
+            <div className='w-1/2 border-l-4 border-emerald-600 px-3'>
               <div className='text-slate-400'>Restaurant Name:</div>
               <div className='text-slate-600'>{restaurant.name}</div>
             </div>
-            <div className='w-1/2 border-l-4 border-lime-600 px-3'>
+            <div className='w-1/2 border-l-4 border-emerald-600 px-3'>
               <div className='text-slate-400'>Restaurant Name in English:</div>
               <div className='text-slate-600'>{restaurant.name_en}</div>
             </div>
           </div>
 
           <div className='flex mt-5'>
-            <div className='w-1/2 border-l-4 border-lime-400 px-3'>
+            <div className='w-1/2 border-l-4 border-emerald-400 px-3'>
               <div className='text-slate-400'>Open:</div>
               <div className='text-slate-600'>{restaurant.open_time || '-'}</div>
             </div>
-            <div className='w-1/2 border-l-4 border-lime-400 px-3'>
+            <div className='w-1/2 border-l-4 border-emerald-400 px-3'>
               <div className='text-slate-400'>Close:</div>
               <div className='text-slate-600'>{restaurant.close_time || '-'}</div>
             </div>
           </div>
 
           <div className='flex mt-5'>
-            <div className='w-1/2 border-l-4 border-lime-600 px-3'>
+            <div className='w-1/2 border-l-4 border-emerald-600 px-3'>
               <div className='text-slate-400'>Day Off Description:</div>
               <div className='text-slate-600'>{restaurant.day_off_description || '-'}</div>
             </div>
-            <div className='w-1/2 border-l-4 border-lime-600 px-3'>
+            <div className='w-1/2 border-l-4 border-emerald-600 px-3'>
               <div className='text-slate-400'>Day Off Description in English:</div>
               <div className='text-slate-600'>{restaurant.day_off_description_en || '-'}</div>
             </div>

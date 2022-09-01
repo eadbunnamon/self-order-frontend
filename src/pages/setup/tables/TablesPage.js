@@ -80,9 +80,14 @@ function TablesPage(props) {
             handleReload={handleReload} />
         ) : (
         <div>
-          <div className='font-bold text-gray-500'>{table.name}</div>
+          <div className='font-bold text-gray-500 mb-3'>{table.name}</div>
           <div className='align-right'>
-            <Link to={`/setup/restaurants/${restaurant_id}/print_qr_codes/${table.id}`} target="_blank">Print QR Code</Link>
+            <Link
+              to={`/setup/restaurants/${restaurant_id}/print_qr_codes/${table.id}`}
+              target="_blank"
+              className='bg-pink-500 text-white active:bg-pink-600 font-bold text-sm px-3 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>
+              Print QR Code
+            </Link>
 
             <TrashIcon
               onClick={() => {if(window.confirm('Delete the item?')) {handleDelete(table)}}}
@@ -105,7 +110,12 @@ function TablesPage(props) {
           <h1 className='font-bold text-slate-600'>Tables ({props.restaurant.number_of_tables})</h1>
         </div>
         <div className='w-1/3 text-right'>
-        <Link to={`/setup/restaurants/${restaurant_id}/print_qr_codes/all_tables`} target="_blank">Print QR Codes for all tables</Link>
+        <Link
+          to={`/setup/restaurants/${restaurant_id}/print_qr_codes/all_tables`}
+          target="_blank"
+          className='bg-pink-500 text-white active:bg-pink-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>
+          Print All QR Codes
+        </Link>
       </div>
       </div>
 

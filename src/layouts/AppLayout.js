@@ -15,15 +15,15 @@ const AppLayout = () => {
 
   return (
     <div>
-      <header className='py-4 top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent'>
+      <header className='pt-4 pb-2 top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent'>
         <div className='flex w-full'>
-          <div className='w-1/3 mx-4'>
+          <div className='w-4/6 mx-4'>
             <Link to='/' className='hover:text-sky-500 dark:hover:text-sky-400'>Logo</Link>
+            {LoginSession.current && (
+              <SetupMenu />
+            )}
           </div>
-          <div className='w-1/3 mx-4 text-center font-bold'>
-            <h1 className='text-3xl text-slate-600'>Self-Order</h1>
-          </div>
-          <div className='w-1/3 mx-4 text-right'>
+          <div className='w-2/6 mx-4 text-right'>
             {LoginSession.current ? (
               <div>
                 <span className='pr-3'>{LoginSession.username}</span>|
@@ -40,8 +40,7 @@ const AppLayout = () => {
       </header>
       {LoginSession.current ? (
         <div className='flex h-screen w-full px-5 mt-5'>
-          <SetupMenu />
-          <div className='w-4/5 pl-5'>
+          <div className='w-5/6 px-5 mx-auto'>
             <Outlet /> {/*nested routes rendered here*/}
           </div>
         </div>
