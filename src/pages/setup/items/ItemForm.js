@@ -2,8 +2,28 @@ import React, { useState, useEffect } from 'react';
 import ApiService from '../../../services/api_service';
 import ErrorMessage from '../../../components/ErrorMessage';
 import _ from 'lodash';
+import { useForm } from "react-hook-form";
+// import { ErrorMessage } from '@hookform/error-message';
 
 import Options from './Options';
+
+const defaultSubOption = [
+  { id: '', name: '', name_en: '', additional_price: '' }
+];
+
+const defaultOption = [
+  {
+    id: '',
+    name: '',
+    name_en: '',
+    need_to_choose: false,
+    minimum_choose: 0,
+    maximum_choose: '',
+    sub_options_attributes: [
+      { name: '', name_en: '', additional_price: '' }
+    ]
+  }
+];
 
 export default function ItemForm(props) {
   const editItem = props.editItem;
@@ -25,23 +45,8 @@ export default function ItemForm(props) {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
-  const default_option = [
-    {
-      id: '',
-      name: '',
-      name_en: '',
-      need_to_choose: false,
-      minimum_choose: 0,
-      maximum_choose: '',
-      sub_options_attributes: [
-        { name: '', name_en: '', additional_price: '' }
-      ]
-    }
-  ]
-
-  const default_sub_option = [
-    { id: '', name: '', name_en: '', additional_price: '' }
-  ]
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  // const onSubmit = data => console.log(data);
 
   const editOption = () => {
     const option_obj = editItem.options.map(option => {
@@ -78,9 +83,9 @@ export default function ItemForm(props) {
     options_attributes: _.isEmpty(editItem.options) ? [] : editOption()
   });
 
-  const handleSubmit = (event) => {
-    console.log('handleSubmit')
-    event.preventDefault();
+  const onSubmit = (data) => {
+    console.log('onSubmit')
+    console.log('data ==>', data);
 
     const updateData = async () => {
       let endpoint = `/categories/${category_id}/items`;
@@ -178,7 +183,7 @@ export default function ItemForm(props) {
   }
 
   const handleAddOption = (item) => {
-    const options = _.concat(item.options_attributes, default_option[0]);
+    const options = _.concat(item.options_attributes, defaultOption[0]);
     setItem({...item, 'options_attributes': options});
   }
 
@@ -196,7 +201,7 @@ export default function ItemForm(props) {
   const handleAddSubOption = (option, option_index) => {
     const updateOption = item.options_attributes.map((option_obj, inx) => {
       if (option_index === inx) {
-        const sub_options = _.concat(option_obj.sub_options_attributes, default_sub_option[0]);
+        const sub_options = _.concat(option_obj.sub_options_attributes, defaultSubOption[0]);
         return {...option_obj, 'sub_options_attributes': sub_options};
       }
       // otherwise return object as is
@@ -258,7 +263,7 @@ export default function ItemForm(props) {
   return (
     <>
       {/*body*/}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="relative py-4 px-5 flex-auto text-left">
           <div className="text-slate-500 text-lg leading-relaxed">
 
@@ -274,12 +279,14 @@ export default function ItemForm(props) {
                   ชื่อเมนู<span className='text-red-500 ml-1'>*</span>
                 </div>
                 <input 
-                  type="text"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
                   id="name"
                   name="name"
                   value={item.name || ''}
+                  {...register('name', { required: true })}
                   onChange={handleChange} />
+                  <div className='text-red-500'>{errors.name && <p>Name is required.</p>}</div>
               </div>
               <div className='w-1/3 mr-4'>
                 <div className='text-gray-700 font-bold'>
@@ -291,7 +298,9 @@ export default function ItemForm(props) {
                   id="name_en"
                   name="name_en"
                   value={item.name_en || ''}
+                  {...register('name_en', { required: true })}
                   onChange={handleChange} />
+                <div className='text-red-500'>{errors.name_en && <p>Name EN is required.</p>}</div>
               </div>
               <div className='w-1/3'>
                 <div className='text-gray-700 font-bold'>
@@ -303,7 +312,9 @@ export default function ItemForm(props) {
                   id="price"
                   name="price"
                   value={item.price || ''}
+                  {...register('price', { required: true })}
                   onChange={handleChange} />
+                  <div className='text-red-500'>{errors.price && <p>Price is required.</p>}</div>
               </div>
             </div>
 
