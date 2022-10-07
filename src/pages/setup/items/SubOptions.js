@@ -35,7 +35,7 @@ export default function SubOptions(props) {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id={`additional_price_${index}`}
                   name="additional_price"
-                  value={sub_option.additional_price || 0}
+                  value={sub_option.additional_price || ''}
                   onChange={(e) => props.handleChangeSubOption(e, props.option_index, index)} />
               </div>
               <div className='w-1/2 mr-3'>

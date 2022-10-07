@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ApiService from '../../../services/api_service';
 import ErrorMessage from '../../../components/ErrorMessage';
 import _ from 'lodash';
@@ -9,6 +9,21 @@ export default function ItemForm(props) {
   const editItem = props.editItem;
   const category_id = editItem.category_id;
   const [error_message, setErrorMessage] = useState('');
+  const [selectedFile, setSelectedFile] = useState();
+  const [preview, setPreview] = useState();
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined)
+      return
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
 
   const default_option = [
     {
@@ -19,13 +34,13 @@ export default function ItemForm(props) {
       minimum_choose: 0,
       maximum_choose: '',
       sub_options_attributes: [
-        { name: '', name_en: '', additional_price: 0 }
+        { name: '', name_en: '', additional_price: '' }
       ]
     }
   ]
 
   const default_sub_option = [
-    { id: '', name: '', name_en: '', additional_price: 0 }
+    { id: '', name: '', name_en: '', additional_price: '' }
   ]
 
   const editOption = () => {
@@ -55,8 +70,8 @@ export default function ItemForm(props) {
   const [item, setItem] = useState({
     id: editItem.id || '',
     name: editItem.name || '',
-    price: editItem.price || '',
     name_en: editItem.name_en || '',
+    price: editItem.price || '',
     image_attributes: {
       file: ''
     },
@@ -75,8 +90,46 @@ export default function ItemForm(props) {
         method = 'put';
       }
 
-      const payload = { item: item };
-      await ApiService.request(endpoint, method, payload);
+      let formData = new FormData();
+      formData.append('item[id]', item?.id || '');
+      formData.append('item[name]', item?.name || '');
+      formData.append('item[name_en]', item?.name_en || '');
+      formData.append('item[price]', item?.price || '');
+
+      if (item?.options_attributes) {
+        item?.options_attributes.forEach((opt) => {
+          formData.append('item[options_attributes][][id]', opt?.id || '');
+          formData.append('item[options_attributes][][name]', opt?.name || '');
+          formData.append('item[options_attributes][][name_en]', opt?.name_en || '');
+          formData.append('item[options_attributes][][need_to_choose]', opt?.need_to_choose || '');
+          formData.append('item[options_attributes][][minimum_choose]', opt?.minimum_choose || '');
+          formData.append('item[options_attributes][][maximum_choose]', opt?.maximum_choose || '');
+
+          if (opt?._destroy) {
+            formData.append('item[options_attributes][][_destroy]', true);
+          }
+
+          if (opt?.sub_options_attributes) {
+            opt?.sub_options_attributes.forEach((sub) => {
+              formData.append('item[options_attributes][][sub_options_attributes][][id]', sub?.id || '');
+              formData.append('item[options_attributes][][sub_options_attributes][][name]', sub?.name || '');
+              formData.append('item[options_attributes][][sub_options_attributes][][name_en]', sub?.name_en || '');
+              formData.append('item[options_attributes][][sub_options_attributes][][additional_price]', sub?.additional_price || '');
+
+              if (sub?._destroy) {
+                formData.append('item[options_attributes][][sub_options_attributes][][_destroy]', true);
+              }
+            });
+          }
+        });
+      }
+
+      if (selectedFile) {
+        formData.append('item[image_file]', selectedFile);
+      }
+
+      // const payload = { item: item };
+      await ApiService.request(endpoint, method, formData);
       props.setShowModal(false);
       props.reloadItems();
     }
@@ -191,12 +244,29 @@ export default function ItemForm(props) {
     setItem({...item, 'options_attributes': updateOption});
   }
 
+  const onSelectFile = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return
+    }
+
+    // I've kept this example simple by using the first image instead of multiple
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  }
+
   return (
     <>
       {/*body*/}
       <form onSubmit={handleSubmit}>
         <div className="relative py-4 px-5 flex-auto text-left">
           <div className="text-slate-500 text-lg leading-relaxed">
+
+            <div className='mb-4'>
+              {selectedFile &&  <img src={preview} alt='PREVIEW_IMG' className='w-44 mb-4' /> }
+              {(!selectedFile && editItem?.image_url) &&  <img src={editItem?.image_url} alt='CURRENT_IMG' className='w-44 mb-4' /> }
+              <input type='file' onChange={onSelectFile} />
+            </div>
 
             <div className='flex'>
               <div className='w-1/3 mr-4'>

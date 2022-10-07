@@ -71,7 +71,7 @@ export default function Options(props) {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id={`minimum_choose_${index}`}
                     name="minimum_choose"
-                    value={option.minimum_choose || 0}
+                    value={option.minimum_choose || ''}
                     onChange={(e) => props.handleChangeOption(e, index)} />
                 </div>
               </div>

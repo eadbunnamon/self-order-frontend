@@ -50,7 +50,7 @@ const AppRoutes = () => {
 
         <Route path="/self-order" element={<SelfOrderLayout />} >
           {/*nested routes*/}
-          <Route path="/self-order" element={<SelfOrderHomePage />} />
+          <Route path="/self-order/:restaurant_id/table_id/:table_id/orders" element={<SelfOrderHomePage />} />
         </Route>
 
         <Route path="/backend" element={<RequireAuth><BackendLayout /></RequireAuth>} >

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import QRCode from "react-qr-code";
 import _ from 'lodash';
 import ApiService from '../../../services/api_service';
+import config from '../../../config';
 
 function PrintQrPage(props) {
   let params = useParams();
@@ -24,7 +25,7 @@ function PrintQrPage(props) {
   }, [restaurant_id, table_id]);
 
   const renderTableQRCode = (table, index) => {
-    const url = `/${restaurant_id}/table_id/${table.id}/orders`;
+    const url = `${config.baseUrl}/self-order/${restaurant_id}/table_id/${table.id}/orders`;
     return (
       <div key={index} className='border border-lime-600 rounded p-3 text-center'>
         <div className='font-bold mb-5'>{table.name}</div>

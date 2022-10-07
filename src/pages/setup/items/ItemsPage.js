@@ -90,7 +90,9 @@ function ItemsPage() {
         <td className='p-3 border'>{item.name_en}</td>
         <td className='p-3 border'>{item.price}</td>
         <td className='p-3 border'>{_.size(item.options)}</td>
-        <td className='p-3 border'></td>
+        <td className='p-3 border'>
+          {item?.image_url &&  <img src={item?.image_url} alt='CURRENT_IMG' className='w-16' /> }
+        </td>
         <td className='p-3 border'>
           <button
             className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mr-3"
